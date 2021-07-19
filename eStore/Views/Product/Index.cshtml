@@ -1,0 +1,83 @@
+﻿@model IEnumerable<BusinessObject.Product>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Product List <span>
+    <i class="fas fa-shopping-cart float-lg-right"><span>@ViewData["Cart"] <span>Total: @ViewData["Total"]</span></span></i>
+    
+</span></h1>
+<a class="btn btn-primary float-right" asp-action="Buy">Buy Now</a>
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<form asp-action="Index">
+
+    <input class="" type="text" value="@ViewData["key"]" name="key" />
+    <input type="submit" value="Search" class="btn btn-primary" />
+
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CategoryId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProductName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Weight)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitPrice)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UnitInStock)
+            </th>
+            <th>Add to cart</th>
+            <th>
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CategoryId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ProductName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitPrice)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UnitInStock)
+            </td>
+            <td>
+
+                <form asp-action="AddToCart" asp-route-id="@item.ProductId">
+                    <input class="w-25" type="number" name="quantity" />
+                        <input type="submit" value="Add " class="btn btn-primary" />
+                </form>
+              
+               @* <a class="btn btn-primary" asp-action="AddToCart" asp-route-id="@item.ProductId">Add one</a>*@
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ProductId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ProductId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ProductId">Delete</a>
+            </td>
+        </tr>
+
+}
+    </tbody>
+</table>
